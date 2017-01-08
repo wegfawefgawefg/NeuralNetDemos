@@ -6,7 +6,7 @@ import random
 '''	-has no backprop
 	-weights randomly deviate
 	-productive deviates are kept
-	-counterproductive deviations are discraded
+	-counterproductive deviations are discarded
 	-productivity is determined by difference between forward output and target
 '''
 
@@ -21,21 +21,22 @@ def randy():
 '''	goal is to make output equal to a target
 '''
 '''	randomly tweak x and y
-	do it by some small amount between positive and negative 1
+	do it by some small amount between positive and negative 1.0
 '''
 	#	run gate forward
 
-	#	if output is closer to goal than current best output try
-		#	make x = tweak x
-		#	make y = tweak y
+	#	if output is closer to goal than current best output:
+		#	make x = tweaked x
+		#	make y = tweaked y
+	#	if not, then try again
 
 #	-	-	-	-	-	SETTINGS	-	-	-	-	-	#
 target = 500.0
-tries = 50
+tries = 5000
 tweakMag = 0.1
 
-x = 5.0
-y = -3.0
+x = 0.0
+y = 0.0
 
 #	-	-	-	-	-	PREP	-	-	-	-	-	#
 output = 0.0
@@ -66,7 +67,7 @@ for i in range( 0, tries ):
 	error = output - target
 
 	#	if error this try is less than best error, push testX and testY to real x and y
-	if error < bestError:
+	if abs( error ) < abs( bestError ):
 		bestError = error
 		x = testX
 		y = testY
